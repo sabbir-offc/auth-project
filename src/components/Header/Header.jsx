@@ -16,12 +16,19 @@ const Header = () => {
         <NavLink to="/">Home</NavLink>
       </li>
 
-      <li className="mx-3">
-        <NavLink to="/orders">Orders</NavLink>
-      </li>
       <li>
         <NavLink to="/register">Register</NavLink>
       </li>
+      {user && (
+        <>
+          <li className="mx-3">
+            <NavLink to="/orders">Orders</NavLink>
+          </li>
+          <li className="mx-3">
+            <NavLink to="/profile">Profile</NavLink>
+          </li>
+        </>
+      )}
     </>
   );
   return (

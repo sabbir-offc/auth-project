@@ -1,11 +1,21 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
-import { updateProfile } from "firebase/auth";
+import { GoogleAuthProvider, updateProfile } from "firebase/auth";
 
 const Register = () => {
   const { createUser } = useContext(AuthContext);
-
+  const { googleSign } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const googleProvider = new GoogleAuthProvider();
+  const handleGoogleSign = () => {
+    googleSign(googleProvider)
+      .then((result) => {
+        console.log(result);
+        navigate("/profile");
+      })
+      .catch((error) => console.error(error));
+  };
   const handleRegister = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
@@ -79,6 +89,11 @@ const Register = () => {
                 <button className="btn btn-primary">Register</button>
               </div>
             </form>
+            <div className="form-control mt-6">
+              <button onClick={handleGoogleSign} className="btn btn-secondary">
+                Register with Google
+              </button>
+            </div>
             <div className="p-6 pt-0">
               <p className="mt-6 flex justify-center font-sans text-sm font-light leading-normal text-inherit antialiased">
                 {`Already have an account?`}
